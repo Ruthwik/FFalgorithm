@@ -1,4 +1,3 @@
-// C++ program for implementation of Ford Fulkerson algorithm
 #include <iostream>
 #include <limits.h>
 #include <string.h>
@@ -77,91 +76,83 @@ int fordFulkerson(int graph[V][V], int s, int t) {
 
 int newfordFulkerson(int graph[V][V], int s, int t) {
 	int y = 0;
-	int x = 0;
+	int x;
 	int maxcapacity;
 	int n = 0;
 	int change;
-	int u = 0, v = 0;
-	int j = 0;
+	int u, v;
+	int j=0;
 	int it;
 	int k = 0, f = 0;
 
 	int pa[V][V] = { { -1, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 }, {
-			-1, -1, -1, -1, -1 - 1 }, { -1, -1, -1, -1, -1 - 1 }, { -1, -1, -1,
-			-1, -1 - 1 }, { -1, -1, -1, -1, -1 - 1 } };
+			-1, -1, -1, -1, -1, - 1 }, { -1, -1, -1, -1, -1 ,- 1 }, { -1, -1, -1,
+			-1, -1 ,- 1 }, { -1, -1, -1, -1, -1, - 1 } };
 
-	int a[V] = { INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX };
+	int a[V]={ INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX };
 	int rGraph[V][V];
 	for (int h = 0; h < V; h++)
-		for (int l = 0; l < V; l++)
-			// {
-			rGraph[h][l] = graph[h][l];
-	// cout<<rGraph[h][l]<<"the Residual graph \n";}
+		 for (int l = 0; l < V; l++)
+				rGraph[h][l] = graph[h][l];
+             
 
 	int parent[V];
 
 	int max_flow = 0;
-
+   
 	while (bfs(rGraph, s, t, parent))  //O(E)
-	{
+	{  
 		int path_flow = INT_MAX;
-		j = 0;
-		for (int v = t; v != s; v = parent[v]) {
-			u = parent[v]; //Going back from 5 to 0
-
-			path_flow = min(path_flow, rGraph[u][v]);
-			pa[k][j] = v;
-			j++;
-
+		  j=0;
+		for (int x = t; x != s; x = parent[x]) {
+			 y = parent[x]; //Going back from 5 to 0
+			path_flow = min(path_flow, rGraph[y][x]);
+			 pa[k][j] = x;
+		     j++;
+		
 		}
-		a[f] = path_flow; // a contains all the minimum plathflow of a augmenting path
+		pa[k][j]=0;
+		a[f] = path_flow; // a contains all the minimum plathflow of an augmenting path
 		f++;
 		k++;
-		pa[k][j] = 0;
-
-		for (int v = t; v != s; v = parent[v]) {
-			int u = parent[v];
-			rGraph[u][v] -= path_flow;
-			rGraph[v][u] += path_flow;
+		for (int vi = t; vi != s; vi = parent[vi]) {
+			int ui = parent[vi];
+			rGraph[ui][vi] -= path_flow;
+			rGraph[vi][ui] += path_flow;
 		}
 
 		max_flow += path_flow;
-
+	
+   
 	}
 
-	cout << "\n" << "The smallest element is " << *std::min_element(a, a + V)
-			<< "\n";
+	cout << "\n" << "The smallest element is " << *std::min_element(a, a + V)<< "\n";
 	it = *std::min_element(a, a + V);
 
 	n = distance(a, find(a, a + V, it));
 
-	// cout<<"n \n"<<n;
-	/*   for (j= 0; j < V; j++)
+	 for (j= 0; j < V; j++)
 	 {
-	 cout<<"pa"<<pa[n][j]<<"\n";
-	 }*/
-	for (u = 0; u < V; u++)
-		for (v = 0; v < V; v++)
-			cout << " " << rGraph[u][v];
+	 cout<<"pa["<<n<<"]["<<j<<"]"<<pa[n][j]<<"\n";
+	 }
+	 
+    for (int u = 0; u < V; u++)
+		for (int v = 0; v < V; v++)
+		{}	//cout << " " << rGraph[u][v];*/
+			
 
+    
 	for (int r = 0; r < V; r++) {
 		int h, b;
 		int q = pa[n][r];
 		int p = pa[n][r + 1];
 		if (graph[p][q] == it) {
-			graph[p][q]++;
 			h = p;
 			b = q;
 		}
-		if (rGraph[p][q] < rGraph[h][b] && q != -1) {
+		if (rGraph[p][q]<=rGraph[h][q] && q != -1) {
 			graph[p][q]++;
 		}
-
-		/* if(rGraph[p][q]<it&&q!=-1&&p!=-1)
-		 {
-		 graph[p][q]++;
-		 }*/
-
 	}
 
 	return max_flow;
@@ -172,7 +163,6 @@ int main() {
 	int x = 0, i = 0;
 	int maxcapacity;
 	int n = 0;
-	int change;
 	int s = 0, t = 5;
 	int u = 0, v = 0;
 	int j = 0;
